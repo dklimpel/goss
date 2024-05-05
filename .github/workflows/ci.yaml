@@ -8,6 +8,9 @@ on:
       - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
 jobs:
   build:
+    services:
+      docker:
+        image: docker:dind
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

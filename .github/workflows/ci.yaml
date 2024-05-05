@@ -1,0 +1,27 @@
+name: "Build binaries"
+on:
+  push:
+    # don't build any branch other than master (and prs) when git pushed
+    branches:
+      - master
+      - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+      - name: prepare windows
+        if: matrix.os == "windows-latest"
+        run: |
+          choco install make
+      - run: ci/install.sh
+      - run: ci/before-build.sh
+      - run: ci/build.sh
+      - run: ci/after-build.sh

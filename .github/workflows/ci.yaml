@@ -18,11 +18,20 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: "1.21"
-      - name: prepare windows
+      - name: Prepare windows
         if: matrix.os == 'windows-latest'
         run: |
           choco install make
-      - run: ci/install.sh
-      - run: ci/before-build.sh
-      - run: ci/build.sh
-      - run: ci/after-build.sh
+      - name: Install
+        run: ci/install.sh
+      - name: Before build
+        run: ci/before-build.sh
+      - name: Build
+        run: ci/build.sh
+      - name: Report failed build
+        if: failure() && matrix.os != 'windows-latest'
+        run: ./cc-test-reporter after-build --exit-code "1" -d
+      - name: Report successful build
+        if: success() && matrix.os != 'windows-latest'
+        run: ./cc-test-reporter after-build --exit-code "0" -d
+

@@ -23,15 +23,31 @@ jobs:
       - name: Build
         run: make "test-windows-all"
 
-  build:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+      - name: Install
+        run: ci/install.sh
+      - name: Before build
+        run: ./cc-test-reporter before-build
+      - name: Build
+        run: ci/build.sh
+      - name: Report failed build
+        if: failure()
+        run: ./cc-test-reporter after-build --exit-code 1 -d
+      - name: Report successful build
+        if: success()
+        run: ./cc-test-reporter after-build --exit-code 0 -d
+
+  build-linux:
     services:
       docker:
         image: docker:dind
-    runs-on: ${{ matrix.os }}
-    strategy:
-      #fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4

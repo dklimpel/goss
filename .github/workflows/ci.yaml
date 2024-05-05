@@ -1,7 +1,8 @@
 name: "Build binaries"
 on:
+  # don't build any branch other than master (and prs) when git pushed
+  pull_request: {}
   push:
-    # don't build any branch other than master (and prs) when git pushed
     branches:
       - master
       - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"

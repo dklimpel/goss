@@ -50,26 +50,18 @@ jobs:
         options: --privileged
         ports:
           - 2375:2375
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
         with:
           go-version: "1.21"
-      - name: Install Docker
-        run: |
-         sudo apt-get update
-         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-         echo \
-           "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-           $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-         sudo apt-get install docker-ce-cli
 
-      - name: Test connection
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y iputils-ping
-          ping -c 3 docker
+#      - name: Test connection
+#        run: |
+#          ping -c 3 docker
 
       - name: Test Docker
         run: |

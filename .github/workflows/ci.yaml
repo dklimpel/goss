@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     services:
+      if: matrix.os == 'ubuntu-latest'
       docker:
         image: docker:dind
     runs-on: ${{ matrix.os }}

@@ -35,7 +35,7 @@ jobs:
       - name: Before build
         run: ./cc-test-reporter before-build
       - name: Build
-        run: ci/build.sh
+        run: make "test-darwin-all"
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

@@ -51,26 +51,6 @@ jobs:
         with:
           go-version: "1.21"
 
-      - name: Install Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get update && \
-              sudo apt-get install -y \
-                 git \
-                 python3
-
-#      - name: Test connection
-#        run: |
-#          ping -c 3 docker
-
-      - name: Test Docker
-        run: |
-          pwd
-          #sudo find . -name "docker.sock"
-          docker version
-          docker info
-          #ping -c 3 docker
-
       - name: Install
         run: ci/install.sh
       - name: Before build

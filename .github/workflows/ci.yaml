@@ -45,6 +45,12 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged --shm-size=2g
+        volumes:
+          - /var/run/docker-dind.sock:/var/run/docker.sock:ro
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -54,14 +60,16 @@ jobs:
 #        uses: golangci/golangci-lint-action@v5
 #        with:
 #          version: latest
-      - name: install lint
-        run: go get -u golang.org/x/lint/golint
       - name: Install
         run: ci/install.sh
       - name: Before build
         run: ./cc-test-reporter before-build
       - name: Build
-        run: ci/build.sh
+        run: |
+          docker info
+          ci/build.sh
+        env:
+          DOCKER_HOST: /var/run/docker-dind.sock
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

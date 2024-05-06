@@ -49,8 +49,8 @@ jobs:
       docker:
         image: docker:dind
         options: --privileged --shm-size=2g
-        volumes:
-          - /var/run/docker-dind.sock:/var/run/docker.sock:ro
+        ports:
+          - 12375:2375
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -69,7 +69,7 @@ jobs:
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: unix:///var/run/docker-dind.sock
+          DOCKER_HOST: tcp://127.0.0.1:12375
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

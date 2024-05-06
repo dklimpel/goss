@@ -45,6 +45,12 @@ jobs:
 
   build-linux:
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged --shm-size=2g
+        volumes:
+          - /home/runner/work/goss/docker.sock:/var/run/docker.sock:ro
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -58,15 +64,13 @@ jobs:
         run: ci/install.sh
       - name: Before build
         run: ./cc-test-reporter before-build
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
       - name: Build
         run: |
           export
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: unix:///var/run/docker.sock
+          DOCKER_HOST: unix:///home/runner/work/goss/docker.sock
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

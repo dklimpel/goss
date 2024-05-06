@@ -50,7 +50,7 @@ jobs:
         image: docker:dind
         options: --privileged --shm-size=2g
         volumes:
-          - /home/runner/work/goss/docker.sock:/var/run/docker.sock
+          - /home/runner/work/goss/goss/docker.sock:/var/run/docker.sock
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -71,7 +71,7 @@ jobs:
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: unix:///home/runner/work/goss/docker.sock
+          DOCKER_HOST: unix:///home/runner/work/goss/goss/docker.sock
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

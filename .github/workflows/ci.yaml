@@ -69,7 +69,7 @@ jobs:
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: /var/run/docker-dind.sock
+          DOCKER_HOST: unix:///var/run/docker-dind.sock
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

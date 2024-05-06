@@ -66,12 +66,10 @@ jobs:
         run: ./cc-test-reporter before-build
       - name: Build
         run: |
-          export
-          pwd
+          #export
+          #pwd
           docker info
           ci/build.sh
-        env:
-          DOCKER_HOST: unix:///home/runner/work/goss/goss/docker.sock
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

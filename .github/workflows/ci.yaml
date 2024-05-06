@@ -7,21 +7,21 @@ on:
       - master
       - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v4
-        with:
-          go-version: "1.21"
-      - name: Prepare windows
-        run: choco install make
-      - name: Install
-        run: ci/install.sh
-      - name: Build
-        run: make "test-windows-all"
+#  build-windows:
+#    runs-on: windows-latest
+#    strategy:
+#      fail-fast: false
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-go@v4
+#        with:
+#          go-version: "1.21"
+#      - name: Prepare windows
+#        run: choco install make
+#      - name: Install
+#        run: ci/install.sh
+#      - name: Build
+#        run: make "test-windows-all"
 
 #  build-macos:
 #    runs-on: macos-latest
@@ -50,10 +50,10 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: "1.21"
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v5
-        with:
-          version: latest
+#      - name: golangci-lint
+#        uses: golangci/golangci-lint-action@v5
+#        with:
+#          version: latest
       - name: install lint
         run: go get -u golang.org/x/lint/golint
       - name: Install

@@ -34,12 +34,14 @@ fi
 # Setup local httbin
 # FIXME: this is a quick hack to fix intermittent CI issues
 network=goss-test
-docker network create --driver bridge  --subnet '172.19.0.0/16' $network
-docker run -d --name httpbin --network $network kennethreitz/httpbin
+# docker network create --driver bridge  --subnet '172.19.0.0/16' $network
+# docker run -d --name httpbin --network $network kennethreitz/httpbin
+docker run -d --name httpbin kennethreitz/httpbin
 opts=(--env OS=$os --cap-add SYS_ADMIN -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp:unconfined --security-opt label:disable)
 id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os" /sbin/init)
 ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$id")
-trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
+# trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
+trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin; exit \$rv" INT TERM EXIT
 # Give httpd time to start up, adding 1 second to see if it helps with intermittent CI failures
 [[ $os != "arch" ]] && docker_exec "/goss/$os/goss-linux-$arch" -g "/goss/goss-wait.yaml" validate -r 10s -s 100ms && sleep 1
 

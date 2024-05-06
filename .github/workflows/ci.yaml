@@ -51,6 +51,8 @@ jobs:
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest
+    env:
+      DOCKER_HOST: "/var/run/docker.sock"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -63,6 +65,7 @@ jobs:
 
       - name: Test Docker
         run: |
+          sudo find / -name "docker.sock"
           docker version
           docker info
 

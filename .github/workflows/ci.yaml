@@ -27,11 +27,17 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: "1.21"
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v5
+        with:
+          version: latest
       - name: Install
         run: ci/install.sh
+      - name: install lint
+        run: go get -u golang.org/x/lint/golint
       - name: Before build
         run: ./cc-test-reporter before-build
       - name: Build

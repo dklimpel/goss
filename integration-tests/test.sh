@@ -37,9 +37,9 @@ network=goss-test
 # docker network create --driver bridge  --subnet '172.19.0.0/16' $network
 # docker run -d --name httpbin --network $network kennethreitz/httpbin
 docker run -d --name httpbin kennethreitz/httpbin
-opts=(--env OS=$os --cap-add SYS_ADMIN -e "container=docker" -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp=unconfined --security-opt label:disable)
+opts=(--env OS=$os --cap-add SYS_ADMIN -e "container=docker" -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp=unconfined -uroot --security-opt label:disable)
 # id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os" /sbin/init)
-id=$(docker run "${opts[@]}" -p 80:80 -p 8888:8888 --volume /sys/fs/cgroup:/sys/fs/cgroup:ro "aelsabbahy/goss_$os" /sbin/init)
+id=$(docker run "${opts[@]}" -p 80:80 -p 8888:8888 --volume /sys/fs/cgroup:/sys/fs/cgroup "aelsabbahy/goss_$os" /sbin/init)
 ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$id")
 # trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
 trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin; exit \$rv" INT TERM EXIT

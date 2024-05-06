@@ -45,7 +45,7 @@ jobs:
 
   build-linux:
     services:
-      dind:
+      docker:
         image: docker:20.10.22-dind
         options: --privileged
         ports:
@@ -54,7 +54,7 @@ jobs:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest
     env:
-      DOCKER_HOST: "tcp://dind:2375"
+      DOCKER_HOST: "tcp://localhost:2375"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4

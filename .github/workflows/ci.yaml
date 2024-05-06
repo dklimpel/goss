@@ -46,11 +46,11 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     services:
-      docker:
+      redis:
         image: docker:dind
-        options: --privileged --shm-size=2g
-        volumes:
-          - /home/runner/work/goss/goss/docker.sock:/var/run/docker.sock
+        options: --privileged
+        ports:
+          - 222375:2375
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -70,6 +70,8 @@ jobs:
           #pwd
           docker info
           ci/build.sh
+        env:
+          DOCKER_HOST: tcp://redis:222375
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

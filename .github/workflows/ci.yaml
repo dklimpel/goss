@@ -45,14 +45,16 @@ jobs:
 
   build-linux:
     services:
-      docker:
+      dind:
         image: docker:20.10.22-dind
         options: --privileged
+        ports:
+          - 2375:2375
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest
     env:
-      DOCKER_HOST: "unix:///var/run/docker.sock"
+      DOCKER_HOST: "tcp://dind:2375"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -69,6 +71,7 @@ jobs:
           #sudo find . -name "docker.sock"
           docker version
           docker info
+          ping -c 3 dind
 
       - name: Install
         run: ci/install.sh

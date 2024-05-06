@@ -47,6 +47,7 @@ sleep 5
 docker ps -a
 docker container logs "$container_name" --details
 docker exec "$container_name" "sh" "-c" "ps aux"
+docker exec "$container_name" "sh" "-c" "whoami"
 docker exec "$container_name" "/usr/sbin/init"
 sleep 5
 docker container logs "$container_name" --details

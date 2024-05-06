@@ -49,14 +49,14 @@ jobs:
         image: docker:25-dind
         options: --privileged
         ports:
-          - 2375:2375
+          - 12375:2375
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest
     container:
       image: ubuntu:latest
     env:
-      DOCKER_HOST: "tcp://localhost:2375"
+      DOCKER_HOST: "tcp://docker:12375"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4

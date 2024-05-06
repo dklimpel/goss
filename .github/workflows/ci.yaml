@@ -71,7 +71,7 @@ jobs:
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: tcp://localhost:8080
+          DOCKER_HOST: tcp://127.0.0.1:8080
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

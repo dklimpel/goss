@@ -50,7 +50,7 @@ jobs:
         image: docker:dind
         options: --privileged --shm-size=2g
         volumes:
-          - /home/runner/work/goss/docker.sock:/var/run/docker.sock:ro
+          - /home/runner/work/goss/docker.sock:/var/run/docker.sock
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -67,6 +67,7 @@ jobs:
       - name: Build
         run: |
           export
+          pwd
           docker info
           ci/build.sh
         env:

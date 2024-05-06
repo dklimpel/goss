@@ -50,7 +50,8 @@ jobs:
         image: docker:dind
         options: --privileged
         ports:
-        - 8080:2375
+        - 8075:2375
+        - 8076:2376
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -71,7 +72,7 @@ jobs:
           docker info
           ci/build.sh
         env:
-          DOCKER_HOST: tcp://127.0.0.1:8080
+          DOCKER_HOST: tcp://127.0.0.1:8076
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

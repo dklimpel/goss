@@ -46,7 +46,11 @@ trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin; exit \$rv" INT TERM EXIT
 sleep 5
 docker ps -a
 docker container logs "$container_name" --details
-docker exec "$container_name" "sh" "-c" "ps aux | grep proxy"
+docker exec "$container_name" "sh" "-c" "ps aux"
+docker exec "$container_name" "/usr/sbin/init"
+sleep 5
+docker container logs "$container_name" --details
+docker exec "$container_name" "sh" "-c" "ps aux"
 # Give httpd time to start up, adding 1 second to see if it helps with intermittent CI failures
 [[ $os != "arch" ]] && docker_exec "/goss/$os/goss-linux-$arch" -g "/goss/goss-wait.yaml" validate -r 10s -s 100ms && sleep 1
 

@@ -71,10 +71,6 @@ jobs:
           #pwd
           docker info
           ci/build.sh
-        env:
-          DOCKER_HOST: tcp://127.0.0.1:8075
-          DOCKER_DRIVER: overlay2
-          DOCKER_TLS_CERTDIR: ""
       - name: Report failed build
         if: failure()
         run: ./cc-test-reporter after-build --exit-code 1 -d

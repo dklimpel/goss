@@ -39,7 +39,7 @@ network=goss-test
 docker run -d --name httpbin kennethreitz/httpbin
 opts=(--env OS=$os --cap-add SYS_ADMIN -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp=unconfined --security-opt label:disable)
 # id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os" /sbin/init)
-id=$(docker run "${opts[@]}" -p 80:80 -p 8888:8888 "aelsabbahy/goss_$os" /sbin/init)
+id=$(docker run "${opts[@]}" -p 80:80 -p 8888:8888 --privileged "aelsabbahy/goss_$os" /sbin/init)
 ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$id")
 # trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
 trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin; exit \$rv" INT TERM EXIT
@@ -48,7 +48,6 @@ docker ps -a
 docker container logs "$container_name" --details
 docker exec "$container_name" "sh" "-c" "ps aux"
 docker exec "$container_name" "sh" "-c" "whoami"
-docker exec "$container_name" "/usr/sbin/init"
 sleep 5
 docker container logs "$container_name" --details
 docker exec "$container_name" "sh" "-c" "ps aux"

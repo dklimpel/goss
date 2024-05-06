@@ -46,10 +46,8 @@ jobs:
   build-linux:
     services:
       docker:
-        image: docker:dind
+        image: docker:20.10.22-dind
         options: --privileged
-        ports:
-          - 2375:2375
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock:ro
     runs-on: ubuntu-latest

@@ -47,6 +47,7 @@ docker ps -a
 sleep 5
 docker ps -a
 docker inspect --format '{{ .State.Status }}' "$id"
+docker container logs "$id"
 # Give httpd time to start up, adding 1 second to see if it helps with intermittent CI failures
 [[ $os != "arch" ]] && docker_exec "/goss/$os/goss-linux-$arch" -g "/goss/goss-wait.yaml" validate -r 10s -s 100ms && sleep 1
 

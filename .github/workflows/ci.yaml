@@ -65,7 +65,8 @@ jobs:
 
       - name: Test Docker
         run: |
-          #sudo find / -name "docker.sock"
+          pwd
+          sudo find . -name "docker.sock"
           docker version
           docker info
 

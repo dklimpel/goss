@@ -62,4 +62,5 @@ jobs:
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ github.repository }}/${{ matrix.image }}:latest
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64

@@ -61,5 +61,5 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: latest
+          tags: ${{ github.repository }}/${{ matrix.image }}:latest
           platforms: linux/amd64,linux/arm64

@@ -1,4 +1,4 @@
-name: Create docker imagea and push to ghcr.io
+name: Create docker images and push to ghcr.io
 
 on:
   push:
@@ -55,6 +55,4 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64

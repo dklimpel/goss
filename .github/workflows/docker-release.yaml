@@ -19,6 +19,12 @@ jobs:
             image: goss_alpine3
           - dockerfile: ./integration-tests/Dockerfile_arch
             image: goss_arch
+          - dockerfile: ./integration-tests/Dockerfile_centos7
+            image: goss_centos7
+          - dockerfile: ./integration-tests/Dockerfile_trusty
+            image: goss_trusty
+          - dockerfile: ./integration-tests/Dockerfile_wheezy
+            image: goss_wheezy
     permissions:
       packages: write
       contents: read

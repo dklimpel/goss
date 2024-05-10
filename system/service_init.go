@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"log"
 
 	"github.com/goss-org/goss/util"
 )
@@ -85,7 +84,6 @@ func initServiceRunLevels(service string) ([]string, error) {
 	var runLevels []string
 	matches, err := filepath.Glob(fmt.Sprintf("/etc/rc*.d/S[0-9][0-9]%s", service))
 	if err != nil {
-		log.Printf("[DEBUG] Warn: Using RUNLEVEL output-format. %s", err)
 		return nil, err
 	}
 	re := regexp.MustCompile("/etc/rc([0-9]+).d/")

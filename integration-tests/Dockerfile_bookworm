@@ -1,50 +1,9 @@
 FROM debian:bookworm
 
 RUN apt-get -o Acquire::Check-Valid-Until=false update && \
-    apt-get install -y init apache2 apache2-utils ca-certificates tinyproxy systemd && \
+    apt-get install -y apache2 ca-certificates tinyproxy systemd systemd-sysv && \
     apt-get remove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# RUN sed -i '/reload|force-reload)/i  status) pidof tinyproxy > /dev/null && echo "tinyproxy is running";;' /etc/init.d/tinyproxy
-# RUN sed -i '/start)/a\        touch /var/log/tinyproxy/tinyproxy.log /var/run/tinyproxy/tinyproxy.pid' /etc/init.d/tinyproxy
-
-RUN ln -s /bin/true /sbin/systemctl
-RUN ln -s /bin/false /usr/sbin/systemd-machine-id-setup
-
-ENV container oci
-
-RUN update-rc.d apache2 defaults
-RUN update-rc.d tinyproxy defaults
-# RUN systemctl restart my-service
 RUN mkfifo /pipe
-
-
-# FROM debian:bookworm
-
-# ENV container docker
-# ENV LC_ALL C
-# ENV DEBIAN_FRONTEND noninteractive
-
-# RUN apt-get update \
-#     && apt-get install -y systemd systemd-sysv \
-#     tinyproxy apache2 \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# RUN cd /lib/systemd/system/sysinit.target.wants/ \
-#     && rm $(ls | grep -v systemd-tmpfiles-setup)
-
-# RUN rm -f /lib/systemd/system/multi-user.target.wants/* \
-#     /etc/systemd/system/*.wants/* \
-#     /lib/systemd/system/local-fs.target.wants/* \
-#     /lib/systemd/system/sockets.target.wants/*udev* \
-#     /lib/systemd/system/sockets.target.wants/*initctl* \
-#     /lib/systemd/system/basic.target.wants/* \
-#     /lib/systemd/system/anaconda.target.wants/* \
-#     /lib/systemd/system/plymouth* \
-#     /lib/systemd/system/systemd-update-utmp*
-
-# VOLUME [ "/sys/fs/cgroup" ]
-
-# CMD ["/lib/systemd/systemd"]

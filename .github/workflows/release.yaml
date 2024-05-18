@@ -31,6 +31,8 @@ jobs:
       - name: "Upload binary as artifact"
         uses: actions/upload-artifact@v4
         with:
+          retention-days: 5
+          if-no-files-found: error
           name: build
           path: |
             release/*

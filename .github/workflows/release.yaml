@@ -40,7 +40,7 @@ jobs:
             extras/*/*goss.sha256
 
   attach-assets:
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs: ["build"]
     runs-on: ubuntu-latest
     steps:

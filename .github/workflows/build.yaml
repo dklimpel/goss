@@ -26,7 +26,7 @@ jobs:
         run: echo "TRAVIS_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
 
       - run: make release
-      - run: make dgoss-sha256
+      - run: make dgoss-sha256 dcgoss-sha256 kgoss-sha256
 
       - name: Create release and upload assets
         uses: softprops/action-gh-release@v2

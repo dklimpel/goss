@@ -136,6 +136,12 @@ arch: build
 dgoss-sha256:
 	cd extras/dgoss/ && sha256sum dgoss > dgoss.sha256
 
+dcgoss-sha256:
+	cd extras/dcgoss/ && sha256sum dcgoss > dcgoss.sha256
+
+kgoss-sha256:
+	cd extras/kgoss/ && sha256sum kgoss > kgoss.sha256
+
 $(PYTHON):
 	$(info Creating virtualenv in $(VENV))
 	@python -m venv $(VENV)

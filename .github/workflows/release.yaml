@@ -47,7 +47,5 @@ jobs:
       - name: Attach to release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            release/*
-            extras/*/*goss
-            extras/*/*goss.sha256
+          files: build/*
+          fail_on_unmatched_files: true

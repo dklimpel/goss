@@ -1,5 +1,7 @@
 name: "Build binaries - release"
 on:
+  # debug
+  pull_request: {}
   push:
     tags:
       - "v*"

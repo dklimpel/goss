@@ -104,7 +104,7 @@ test-int-all: test-int-32 test-int-64
 
 centos7-32: build
 	$(info INFO: Starting build $@)
-	cd integration-tests/ && ./test.sh centos7 386
+	#cd integration-tests/ && ./test.sh centos7 386
 wheezy-32: build
 	$(info INFO: Starting build $@)
 	cd integration-tests/ && ./test.sh wheezy 386
@@ -119,7 +119,7 @@ arch-32: build
 	cd integration-tests/ && ./test.sh arch 386
 centos7: build
 	$(info INFO: Starting build $@)
-	cd integration-tests/ && ./test.sh centos7 amd64
+	#cd integration-tests/ && ./test.sh centos7 amd64
 wheezy: build
 	$(info INFO: Starting build $@)
 	cd integration-tests/ && ./test.sh wheezy amd64

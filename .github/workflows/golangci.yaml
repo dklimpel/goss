@@ -12,7 +12,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  golangci:
+  lint:
     name: lint
     runs-on: ubuntu-latest
     steps:
@@ -24,3 +24,21 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.59
+
+  coverage:
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: coverage cov
+        run: make cov
+
+      - name: coverage funcov
+        run: make funcov
+
+      - name: coverage htmlcov
+        run: make htmlcov

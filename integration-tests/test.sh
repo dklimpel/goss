@@ -18,9 +18,9 @@ if ! md5sum -c "Dockerfile_${os}.md5"; then
   docker build -t "aelsabbahy/goss_${os}:latest" - < "Dockerfile_$os"
 # Pull if image doesn't exist locally
 elif ! docker images | grep "aelsabbahy/goss_$os";then
-  docker pull "aelsabbahy/goss_$os:sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
+  docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 fi
-docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
+# docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 
 container_name="goss_int_test_${os}_${arch}"
 docker_exec() {

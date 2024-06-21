@@ -18,8 +18,9 @@ if ! md5sum -c "Dockerfile_${os}.md5"; then
   docker build -t "aelsabbahy/goss_${os}:latest" - < "Dockerfile_$os"
 # Pull if image doesn't exist locally
 elif ! docker images | grep "aelsabbahy/goss_$os";then
-  docker pull "aelsabbahy/goss_$os"
+  docker pull "aelsabbahy/goss_$os:sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 fi
+docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 
 container_name="goss_int_test_${os}_${arch}"
 docker_exec() {
@@ -37,7 +38,7 @@ network=goss-test
 docker network create --driver bridge  --subnet '172.19.0.0/16' $network
 docker run -d --name httpbin --network $network kennethreitz/httpbin
 opts=(--env OS=$os --cap-add SYS_ADMIN -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp:unconfined --security-opt label:disable)
-id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os" /sbin/init)
+id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc" /sbin/init)
 ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$id")
 trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
 # Give httpd time to start up, adding 1 second to see if it helps with intermittent CI failures
@@ -46,8 +47,12 @@ trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network
 #out=$(docker exec "$container_name" bash -c "time /goss/$os/goss-linux-$arch -g /goss/$os/goss.yaml validate")
 docker_exec sh -c "netstat -lntp" || true
 docker_exec sh -c "ps -ef" || true
-docker_exec sh -c "ls -alh /var/log/apache2" || true
-docker_exec sh -c "cat /var/log/apache2/error.log" || true
+# docker_exec sh -c "ls -alh /var/log/apache2" || true
+# docker_exec sh -c "ls -alh /etc/apache2/*" || true
+# docker_exec sh -c "ls -alh /etc/apache2/conf.d" || true
+# docker_exec sh -c "cat /etc/apache2/conf.d/*" || true
+docker_exec sh -c "cat /etc/selinux/config" || true
+docker_exec sh -c "cat /etc/apache2/httpd.conf | grep Listen" || true
 out=$(docker_exec "/goss/$os/goss-linux-$arch" --vars "/goss/vars.yaml" --vars-inline "$vars_inline" -g "/goss/$os/goss.yaml" validate)
 echo "$out"
 

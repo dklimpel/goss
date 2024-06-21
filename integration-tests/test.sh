@@ -46,6 +46,8 @@ trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network
 #out=$(docker exec "$container_name" bash -c "time /goss/$os/goss-linux-$arch -g /goss/$os/goss.yaml validate")
 docker_exec sh -c "netstat -lntp" || true
 docker_exec sh -c "ps -ef" || true
+docker_exec sh -c "ls -alh /var/log/apache2" || true
+docker_exec sh -c "cat /var/log/apache2/error.log" || true
 out=$(docker_exec "/goss/$os/goss-linux-$arch" --vars "/goss/vars.yaml" --vars-inline "$vars_inline" -g "/goss/$os/goss.yaml" validate)
 echo "$out"
 

@@ -4,7 +4,7 @@ MAINTAINER Ahmed
 # install apache2 and remove un-needed services
 RUN apk update && \
   apk add openrc apache2 bash ca-certificates tinyproxy && \
-  sed -i 's/Listen 80/Listen [::]:80\nListen 0.0.0.0:80/g' /etc/apache2/httpd.conf && \
+  sed -i 's/Listen 80/Listen [::]:8889\nListen 0.0.0.0:8889/g' /etc/apache2/httpd.conf && \
   rc-update add apache2 && \
   rc-update add tinyproxy && \
   rm -rf /etc/init.d/networking /etc/init.d/hwdrivers /var/cache/apk/* /tmp/*

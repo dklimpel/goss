@@ -20,7 +20,6 @@ if ! md5sum -c "Dockerfile_${os}.md5"; then
 elif ! docker images | grep "aelsabbahy/goss_$os";then
   docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 fi
-# docker pull "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc"
 
 container_name="goss_int_test_${os}_${arch}"
 docker_exec() {
@@ -38,7 +37,7 @@ network=goss-test
 docker network create --driver bridge  --subnet '172.19.0.0/16' $network
 docker run -d --name httpbin --network $network kennethreitz/httpbin
 opts=(--env OS=$os --cap-add SYS_ADMIN -v "$PWD/goss:/goss" -d --name "$container_name" --security-opt seccomp:unconfined --security-opt label:disable)
-id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os@sha256:436200c54af7f5a697d31e5a74d43c346d63f7ee1992eb966eada2d5b9f40efc" /sbin/init)
+id=$(docker run "${opts[@]}" --network $network "aelsabbahy/goss_$os" /sbin/init)
 ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$id")
 trap "rv=\$?; docker rm -vf $id;docker rm -vf httpbin;docker network rm $network; exit \$rv" INT TERM EXIT
 # Give httpd time to start up, adding 1 second to see if it helps with intermittent CI failures

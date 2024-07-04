@@ -1,7 +1,6 @@
 name: Trivy Code Scanning
 
 on:
-  push:
   schedule:
     - cron: "0 3 * * 5"
   workflow_dispatch:
@@ -12,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: read
-      security-events: write # To upload Trivy sarif files
+      security-events: write
 
     steps:
       - name: Run Trivy vulnerability scanner

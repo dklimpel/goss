@@ -18,7 +18,7 @@ jobs:
       - id: set-matrix
         # lists all Dockerfile_* and ignore (grep) files with extension (e.g. *.md5)
         # tranforms the file list in JSON array (StackOverflow#10234327)
-        run: echo "::set-output name=matrix::$(ls integration-tests/Dockerfile_* | grep -Ev "\..{0,3}$" | jq -R -s -c 'split("\n")[:-1]')"
+        run: echo "matrix={\"manifest\":$(ls integration-tests/Dockerfile_* | grep -Ev "\..{0,3}$" | jq -R -s -c 'split("\n")[:-1]')}" >> "$GITHUB_OUTPUT"
   docker:
     name: Push Docker image
     runs-on: ubuntu-latest

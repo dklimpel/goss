@@ -19,13 +19,14 @@ jobs:
         run: |
           # lists all Dockerfile_* and ignore (grep) files with extension (e.g. *.md5)
           # tranforms the file list in JSON array (StackOverflow#10234327)
+          # extract from the filename the image name an wrap with "manifest"
           ls integration-tests/Dockerfile_* |
             grep -Ev "\..{0,3}$" |
             jq -R -s 'split("\n")[:-1]' |
-            jq '. | map({dockerfile: ., image: sub(".*_"; "")})' > filelist.json
+            jq '. | map({dockerfile: ., image: sub(".*_"; "")})' |
+            jq '{ manifest: . }' > filelist.json
           jq . filelist.json
-          cat filelist.json
-          echo "matrix={\"manifest\":$(jq -c . filelist.json)}" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(jq -c . filelist.json)" >> "$GITHUB_OUTPUT"
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 

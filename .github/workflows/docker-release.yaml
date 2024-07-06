@@ -23,8 +23,7 @@ jobs:
           ls integration-tests/Dockerfile_* |
             grep -Ev "\..{0,3}$" |
             jq -R -s 'split("\n")[:-1]' |
-            jq '. | map({dockerfile: ., image: sub(".*_"; "")})' |
-            jq '{ manifest: . }' > filelist.json
+            jq '. | map({dockerfile: ., image: sub(".*_"; "")})' > filelist.json
           jq . filelist.json
           echo "matrix=$(jq -c . filelist.json)" >> "$GITHUB_OUTPUT"
     outputs:
@@ -42,7 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.list-dockerfiles.outputs.matrix) }}
+      matrix:
+        manifest: ${{ fromJson(needs.list-dockerfiles.outputs.matrix) }}
     permissions:
       packages: write
       contents: read

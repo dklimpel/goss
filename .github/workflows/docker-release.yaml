@@ -24,8 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        manifest: ${{ fromJson(needs.list-dockerfiles.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.list-dockerfiles.outputs.matrix) }}
     permissions:
       packages: write
       contents: read

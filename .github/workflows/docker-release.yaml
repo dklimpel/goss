@@ -24,7 +24,6 @@ jobs:
             grep -Ev "\..{0,3}$" |
             jq -R -s 'split("\n")[:-1]' |
             jq '. | map({dockerfile: ., image: sub(".*_"; "")})' > filelist.json
-          jq . filelist.json
           echo "matrix=$(jq -c . filelist.json)" >> "$GITHUB_OUTPUT"
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -42,9 +41,6 @@ jobs:
       contents: read
 
     steps:
-      - name: debug
-        run: echo "${{ matrix.image }}"
-
       - name: Checkout
         uses: actions/checkout@v4
         with:

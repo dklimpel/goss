@@ -19,7 +19,7 @@ jobs:
         run: |
           # lists all Dockerfile_* and ignore (grep) files with extension (e.g. *.md5)
           # tranforms the file list in JSON array (StackOverflow#10234327)
-          # extract from the filename the image name an wrap with "manifest"
+          # convert the list into objects of dockerfile and image name
           ls integration-tests/Dockerfile_* |
             grep -Ev "\..{0,3}$" |
             jq -R -s 'split("\n")[:-1]' |
@@ -48,6 +48,10 @@ jobs:
       contents: read
 
     steps:
+      - name: debug
+        run: echo "${{ matrix.image }}"
+      - run: echo "${{ matrix }}"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:

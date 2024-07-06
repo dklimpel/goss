@@ -11,14 +11,17 @@ jobs:
   list-dockerfiles:
     name: Create list of existing dockerfiles
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
-      - id: set-matrix
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get file list
+        id: set-matrix
         # lists all Dockerfile_* and ignore (grep) files with extension (e.g. *.md5)
         # tranforms the file list in JSON array (StackOverflow#10234327)
         run: echo "matrix={\"manifest\":$(ls integration-tests/Dockerfile_* | grep -Ev "\..{0,3}$" | jq -R -s -c 'split("\n")[:-1]')}" >> "$GITHUB_OUTPUT"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
   docker:
     name: Push Docker image
     runs-on: ubuntu-latest

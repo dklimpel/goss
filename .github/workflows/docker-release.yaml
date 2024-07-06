@@ -43,8 +43,7 @@ jobs:
 
     steps:
       - name: debug
-        run: echo "${{ matrix."image" }}"
-      - run: echo "${{ matrix }}"
+        run: echo "${{ matrix.image }}"
 
       - name: Checkout
         uses: actions/checkout@v4

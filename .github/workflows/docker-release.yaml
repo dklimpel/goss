@@ -8,23 +8,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  list-dockerfiles:
+    name: Create list of existing dockerfiles
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        # lists all Dockerfile_* and ignore (grep) files with extension (e.g. *.md5)
+        # tranforms the file list in JSON array (StackOverflow#10234327)
+        run: echo "::set-output name=matrix::$(ls integration-tests/Dockerfile_* | grep -Ev "\..{0,3}$" | jq -R -s -c 'split("\n")[:-1]')"
   docker:
     name: Push Docker image
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - dockerfile: ./integration-tests/Dockerfile_alpine3
-            image: goss_alpine3
-          - dockerfile: ./integration-tests/Dockerfile_arch
-            image: goss_arch
-          - dockerfile: ./integration-tests/Dockerfile_centos7
-            image: goss_centos7
-          - dockerfile: ./integration-tests/Dockerfile_trusty
-            image: goss_trusty
-          - dockerfile: ./integration-tests/Dockerfile_wheezy
-            image: goss_wheezy
+        manifest: ${{ fromJson(needs.list-dockerfiles.outputs.matrix) }}
     permissions:
       packages: write
       contents: read

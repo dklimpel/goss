@@ -22,7 +22,15 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
+  debug:
+    needs: [list-dockerfiles]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ needs.list-dockerfiles.outputs.matrix }}"
+      - run: echo "${{ list-dockerfiles.outputs.matrix }}"
+
   docker:
+    needs: [list-dockerfiles]
     name: Push Docker image
     runs-on: ubuntu-latest
     strategy:

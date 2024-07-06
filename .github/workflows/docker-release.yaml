@@ -25,7 +25,6 @@ jobs:
             jq -R -s 'split("\n")[:-1]' |
             jq '. | map({dockerfile: ., image: sub(".*_"; "")})' > filelist.json
           jq . filelist.json
-          jq -r . filelist.json
           echo "matrix=$(jq -c . filelist.json)" >> "$GITHUB_OUTPUT"
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}

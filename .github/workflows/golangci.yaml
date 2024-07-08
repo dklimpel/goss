@@ -29,6 +29,7 @@ jobs:
           version: v1.59
 
   coverage:
+    needs: [lint]
     name: coverage
     runs-on: ubuntu-latest
     steps:
@@ -41,6 +42,7 @@ jobs:
         run: make cov
 
   integartion-test:
+    needs: [coverage]
     name: Integration tests
     runs-on: ubuntu-latest
     steps:

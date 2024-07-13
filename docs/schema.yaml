@@ -333,8 +333,8 @@ definitions:
         items:
           type: string
         default:
-        - rw
-        - relatime
+          - rw
+          - relatime
       source:
         type: string
         default: /dev/mapper/fedora-home
@@ -360,7 +360,7 @@ definitions:
         default: true
       versions:
         oneOf:
-          - type: object # matcher
+          - type: object  # matcher
           - type: array
             items:
               type: string
@@ -584,10 +584,10 @@ properties:
       $ref: "#/definitions/dnsTest"
 
   file:
-      type: object
-      description: "Validates the state of a file, directory, or symbolic link"
-      additionalProperties:
-        $ref: "#/definitions/fileTest"
+    type: object
+    description: "Validates the state of a file, directory, or symbolic link"
+    additionalProperties:
+      $ref: "#/definitions/fileTest"
 
   gossfile:
     type: object

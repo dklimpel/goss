@@ -21,6 +21,6 @@ rules:
   document-start: disable
   truthy:
     allowed-values:
-      - "on"
+      - "on"  # required for github workflows
       - "false"
       - "true"

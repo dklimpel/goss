@@ -2,7 +2,9 @@
 extends: default
 
 ignore:
+  # uses go templates (invalid yaml)
   - integration-tests/goss/goss-shared.yaml
+  - docs/goss.yaml
 
 rules:
   braces:

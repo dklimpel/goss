@@ -16,7 +16,7 @@ command:
     stdout:
       - go version go1.6 linux/amd64
     stderr: []
-    timeout: 10000 # in milliseconds
+    timeout: 10000  # in milliseconds
     skip: false
 
 dns:
@@ -190,7 +190,7 @@ user:
       home: /var/lib/nfs
       shell: /sbin/nologin
       skip: false
-    
+
     nobody:
       exists: true
       uid:

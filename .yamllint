@@ -2,7 +2,7 @@
 extends: default
 
 ignore:
-  # uses go templates (invalid yaml)
+  # uses go templates (these are invalid yaml files)
   - integration-tests/goss/goss-service.yaml
   - integration-tests/goss/goss-shared.yaml
   - docs/goss.yaml

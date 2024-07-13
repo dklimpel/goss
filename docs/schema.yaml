@@ -530,8 +530,8 @@ properties:
           <span class="pl-ent">addrs</span>:
           - <span class="pl-s"><span class="pl-pds">"</span>a.dnstest.io.<span class="pl-pds">"</span></span>
 
-         <span class="pl-c"><span class="pl-c">#</span> Validate a PTR record</span>
-         <span class="pl-ent">PTR:8.8.8.8</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Validate a PTR record</span>
+        <span class="pl-ent">PTR:8.8.8.8</span>:
           <span class="pl-ent">resolvable</span>: <span class="pl-c1">true</span>
           <span class="pl-ent">server</span>: <span class="pl-s">8.8.8.8</span>
           <span class="pl-ent">addrs</span>:
@@ -558,7 +558,7 @@ properties:
           server: 8.8.8.8
           addrs:
           - &quot;dns.google.&quot;
-         # Validate and SRV record
+        # Validate and SRV record
         SRV:_https._tcp.dnstest.io:
           resolvable: true
           server: 208.67.222.222

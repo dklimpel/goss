@@ -13,3 +13,8 @@ rules:
     indent-sequences: consistent
   line-length: disable
   document-start: disable
+  truthy:
+    allowed-values:
+      - "on"
+      - "false"
+      - "true"

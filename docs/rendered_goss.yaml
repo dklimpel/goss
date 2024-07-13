@@ -47,7 +47,7 @@ port:
   tcp:22:
     listening: true
     ip:
-    - "1"
+      - "1"
 service:
   sshd:
     enabled: true
@@ -93,14 +93,14 @@ command:
     exec: go version
     exit-status: 0
     stdout:
-    - go version go1.6 linux/amd64
+      - go version go1.6 linux/amd64
     stderr: []
     timeout: 10000
 dns:
   localhost:
     resolvable: true
     addrs:
-    - ::1
+      - ::1
     timeout: 0
 process:
   chrome:
@@ -143,7 +143,7 @@ matching:
   check_status:
     content: PASS
     matches:
-    - not: FAIL
+      - not: FAIL
   example:
     content:
       - 1.0.1
@@ -152,7 +152,7 @@ matching:
       semver-constraint: '>1.0.0 <2.0.0 !=1.5.0'
   has_2:
     content:
-    - 2
+      - 2
     matches:
       contain-element: 2
   has_foo_bar_and_baz:

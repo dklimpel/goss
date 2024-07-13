@@ -65,4 +65,4 @@ jobs:
 
       - name: Integration tests
         if: matrix.os == "ubuntu-latest"
-        run: make make test-int-all
+        run: make test-int-all

@@ -1,6 +1,9 @@
 ---
 extends: default
 
+ignore:
+  - integration-tests/goss/goss-shared.yaml
+
 rules:
   braces:
     min-spaces-inside: 0

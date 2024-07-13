@@ -65,9 +65,9 @@ matching:
         - contain-element:
             have-prefix: 'moo'
         - contain-elements:
-           - not: 'this_doesnt_exist'
-           - lt: 20
-           - have-prefix: 'moo'
+            - not: 'this_doesnt_exist'
+            - lt: 20
+            - have-prefix: 'moo'
 
   test_reader_using_array:
     content: |

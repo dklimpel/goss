@@ -40,6 +40,7 @@ jobs:
 
       - name: Unit tests and coverage
         run: make cov
+      - run: find . -not -type d -exec file "{}" ";" | grep CRLF
 
   integration-test:
     needs: [coverage]
